@@ -1,0 +1,35 @@
+services:
+  qbittorrent:
+    image: lscr.io/linuxserver/qbittorrent:4.6.0
+    container_name: qbittorrent
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Etc/UTC
+      - WEBUI_PORT=8080
+      - TORRENTING_PORT=6881
+    volumes:
+      - /config/qbittorrent:/config
+      - /mnt/external/anime:/downloads/anime
+      - /mnt/external/downloads:/downloads/general
+    ports:
+      - 8080:8080
+      - 6881:6881
+      - 6881:6881/udp
+    restart: unless-stopped
+
+  sonarr:
+    image: lscr.io/linuxserver/sonarr:latest
+    container_name: sonarr
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Etc/UTC
+    volumes:
+      - /config/sonarr/data:/config
+      - /mnt/external/anime:/anime
+      - /mnt/external/anime:/downloads/anime
+      - /mnt/external/downloads:/downloads/general
+    ports:
+      - 8989:8989
+    restart: unless-stopped
