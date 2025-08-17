@@ -6,7 +6,16 @@ services:
     container_name: jellyfin
     network_mode: "host"
     restart: unless-stopped
+
     volumes:
       - /mnt/external/jellyfin/config:/config
       - /mnt/external/jellyfin/cache:/cache
       - /mnt/external/anime:/media/anime:ro
+      - /mnt/external/shows:/media/shows:ro
+      - /mnt/external/jellyfin_artwork:/media/artwork
+
+    environment:
+      - JELLYFIN_PublishedServerUrl=http://fin.yassinecloud.fyi
+
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
